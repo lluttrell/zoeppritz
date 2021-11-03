@@ -57,16 +57,9 @@ class Zoeppritz:
         # Takes the p-wave velocity, s-wave velocity and density for two layers and plots
         # the normalized energy coefficients of the reflected and transmitted p and s waves
         
-        # Compute the aucoustic Impedance
-        z1s = p1*b1
-        z2s = p2*b2
-        z1p = p1*a1
-        z2p = p2*a2
-        
         # Create array of incidence angles between 0 and 90 degrees
         N = 100
-        theta1deg = np.linspace(0.,90.,N)
-        theta1 = np.radians(theta1deg)
+        thetas = np.linspace(0.,90.,N)
 
         #make zero arrays to be filled in later
         ERP = np.zeros(N)
@@ -75,36 +68,33 @@ class Zoeppritz:
         ETS = np.zeros(N)
 
         for i in range(0,N):
-            print(theta1[i])
-            t1 = theta1[i]
-            results = self.solve(a1,a2,b1,b2,p1,p2,t1)
-            print(results)
+            results = self.solve(a1,a2,b1,b2,p1,p2,thetas[i])
             (ERP[i],ERS[i], ETP[i], ETS[i]) = results
-
-                
-        fig,ax = plt.subplots(4,1,figsize=(6,6),sharex=False)
-        ax[0].plot(theta1deg,ERP)
+        
+        fig, ax = plt.subplots(4,1,figsize=(6,6),sharex=False)
+        ax[0].plot(thetas,ERP)
         ax[0].set_ylabel("$E_{rp}$")
         ax[0].set_ylim(-0.01,1.01)
 
-        ax[1].plot(theta1deg,ETP)
+        ax[1].plot(thetas, ETP)
         ax[1].set_ylabel("$E_{tp}$")
         ax[1].set_ylim(-0.01,1.01)
 
-        ax[2].plot(theta1deg,ERS)
+        ax[2].plot(thetas, ERS)
         ax[2].set_ylabel("$E_{rs}$")
         ax[2].set_ylim(-0.01,1.01)
 
-        ax[3].plot(theta1deg,ETS)
+        ax[3].plot(thetas,ETS)
         ax[3].set_ylabel("$E_{ts}$")
         ax[3].set_ylim(-0.01,1.01)
         ax[3].set_xlabel("Incident Angle $(^\circ$)")
 
-        fig.savefig('test.png')
+        return fig
 
 if __name__ == '__main__':
     a1, a2 = 2000.,4000.
     b1, b2 = 1070.,2310.
     p1, p2 = 2000.,2500.
     zoep = Zoeppritz()
-    zoep.plot_energy_coeff(a1,a2,b1,b2,p1,p2)
+    fig = zoep.plot_energy_coeff(a1,a2,b1,b2,p1,p2)
+    fig.savefig('test2.png')
