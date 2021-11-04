@@ -2,6 +2,14 @@
 <!-- Generated with glade 3.38.2 -->
 <interface>
   <requires lib="gtk+" version="3.24"/>
+  <object class="GtkAdjustment" id="adjustment_p1">
+    <property name="upper">15000</property>
+    <property name="value">4000</property>
+    <property name="step-increment">100</property>
+    <property name="page-increment">1000</property>
+    <signal name="changed" handler="on_adjustment_p1_changed" swapped="no"/>
+    <signal name="value-changed" handler="on_adjustment_p1_changed" swapped="no"/>
+  </object>
   <object class="GtkWindow" id="main_window">
     <property name="can-focus">False</property>
     <property name="title" translatable="yes">Zoeppritz Energy Explorer</property>
@@ -37,13 +45,15 @@
             <property name="hexpand">True</property>
             <property name="row-homogeneous">True</property>
             <child>
-              <object class="GtkSpinButton" id="velocity_p_1">
+              <object class="GtkSpinButton" id="velocity_p1">
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="margin-start">4</property>
                 <property name="margin-end">12</property>
                 <property name="margin-top">4</property>
                 <property name="margin-bottom">4</property>
+                <property name="input-purpose">number</property>
+                <property name="adjustment">adjustment_p1</property>
                 <property name="climb-rate">100</property>
               </object>
               <packing>

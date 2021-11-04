@@ -2,6 +2,13 @@
 <!-- Generated with glade 3.38.2 -->
 <interface>
   <requires lib="gtk+" version="3.24"/>
+  <object class="GtkAdjustment" id="adjustment_p1">
+    <property name="upper">15000</property>
+    <property name="value">4000</property>
+    <property name="step-increment">100</property>
+    <property name="page-increment">1000</property>
+    <signal name="changed" handler="on_adjustment_p1_changed" swapped="no"/>
+  </object>
   <object class="GtkWindow" id="main_window">
     <property name="can-focus">False</property>
     <property name="title" translatable="yes">Zoeppritz Energy Explorer</property>
@@ -14,10 +21,13 @@
         <property name="can-focus">False</property>
         <property name="orientation">vertical</property>
         <child>
-          <object class="GtkImage">
+          <object class="GtkScrolledWindow" id="graph_box">
             <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="stock">gtk-missing-image</property>
+            <property name="can-focus">True</property>
+            <property name="shadow-type">in</property>
+            <child>
+              <placeholder/>
+            </child>
           </object>
           <packing>
             <property name="expand">True</property>
@@ -30,35 +40,24 @@
           <object class="GtkGrid">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
+            <property name="halign">center</property>
+            <property name="hexpand">True</property>
+            <property name="row-homogeneous">True</property>
             <child>
-              <object class="GtkEntry">
+              <object class="GtkSpinButton" id="velocity_p1">
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
-                <property name="placeholder-text" translatable="yes">2900</property>
-              </object>
-              <packing>
-                <property name="left-attach">1</property>
-                <property name="top-attach">1</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkEntry">
-                <property name="visible">True</property>
-                <property name="can-focus">True</property>
+                <property name="margin-start">4</property>
+                <property name="margin-end">12</property>
+                <property name="margin-top">4</property>
+                <property name="margin-bottom">4</property>
+                <property name="input-purpose">number</property>
+                <property name="adjustment">adjustment_p1</property>
+                <property name="climb-rate">100</property>
               </object>
               <packing>
                 <property name="left-attach">1</property>
                 <property name="top-attach">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkEntry">
-                <property name="visible">True</property>
-                <property name="can-focus">True</property>
-              </object>
-              <packing>
-                <property name="left-attach">1</property>
-                <property name="top-attach">2</property>
               </packing>
             </child>
             <child>
@@ -87,7 +86,7 @@
               <object class="GtkLabel">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="label" translatable="yes">density1</property>
+                <property name="label" translatable="yes">ρ1</property>
               </object>
               <packing>
                 <property name="left-attach">0</property>
@@ -98,7 +97,7 @@
               <object class="GtkLabel">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="label" translatable="yes">label</property>
+                <property name="label" translatable="yes">Vp2</property>
               </object>
               <packing>
                 <property name="left-attach">2</property>
@@ -109,7 +108,7 @@
               <object class="GtkLabel">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="label" translatable="yes">label</property>
+                <property name="label" translatable="yes">Vs2</property>
               </object>
               <packing>
                 <property name="left-attach">2</property>
@@ -120,7 +119,7 @@
               <object class="GtkLabel">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="label" translatable="yes">label</property>
+                <property name="label" translatable="yes">ρ2</property>
               </object>
               <packing>
                 <property name="left-attach">2</property>
@@ -128,9 +127,53 @@
               </packing>
             </child>
             <child>
-              <object class="GtkEntry">
+              <object class="GtkSpinButton" id="velocity_s_1">
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
+                <property name="margin-left">4</property>
+                <property name="margin-right">12</property>
+                <property name="margin-start">4</property>
+                <property name="margin-end">12</property>
+                <property name="margin-top">4</property>
+                <property name="margin-bottom">4</property>
+                <property name="text" translatable="yes">1070</property>
+                <property name="climb-rate">100</property>
+              </object>
+              <packing>
+                <property name="left-attach">1</property>
+                <property name="top-attach">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkSpinButton" id="density_1">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="margin-left">4</property>
+                <property name="margin-right">12</property>
+                <property name="margin-start">4</property>
+                <property name="margin-end">12</property>
+                <property name="margin-top">4</property>
+                <property name="margin-bottom">4</property>
+                <property name="text" translatable="yes">0</property>
+                <property name="climb-rate">100</property>
+              </object>
+              <packing>
+                <property name="left-attach">1</property>
+                <property name="top-attach">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkSpinButton" id="velocity_p_">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="margin-left">4</property>
+                <property name="margin-right">12</property>
+                <property name="margin-start">4</property>
+                <property name="margin-end">12</property>
+                <property name="margin-top">4</property>
+                <property name="margin-bottom">4</property>
+                <property name="text" translatable="yes">0</property>
+                <property name="climb-rate">100</property>
               </object>
               <packing>
                 <property name="left-attach">3</property>
@@ -138,9 +181,17 @@
               </packing>
             </child>
             <child>
-              <object class="GtkEntry">
+              <object class="GtkSpinButton" id="velocity_s_2">
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
+                <property name="margin-left">4</property>
+                <property name="margin-right">12</property>
+                <property name="margin-start">4</property>
+                <property name="margin-end">12</property>
+                <property name="margin-top">4</property>
+                <property name="margin-bottom">4</property>
+                <property name="text" translatable="yes">0</property>
+                <property name="climb-rate">100</property>
               </object>
               <packing>
                 <property name="left-attach">3</property>
@@ -148,9 +199,17 @@
               </packing>
             </child>
             <child>
-              <object class="GtkEntry">
+              <object class="GtkSpinButton" id="density_2">
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
+                <property name="margin-left">4</property>
+                <property name="margin-right">12</property>
+                <property name="margin-start">4</property>
+                <property name="margin-end">12</property>
+                <property name="margin-top">4</property>
+                <property name="margin-bottom">4</property>
+                <property name="text" translatable="yes">0</property>
+                <property name="climb-rate">100</property>
               </object>
               <packing>
                 <property name="left-attach">3</property>
@@ -160,7 +219,8 @@
           </object>
           <packing>
             <property name="expand">False</property>
-            <property name="fill">True</property>
+            <property name="fill">False</property>
+            <property name="padding">3</property>
             <property name="position">1</property>
           </packing>
         </child>
