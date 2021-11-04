@@ -9,33 +9,37 @@ from matplotlib.backends.backend_gtk3agg import (
 from matplotlib.figure import Figure
 
 class MainWindow(Gtk.Window):
+    zoep = Zoeppritz()
+    a1, a2 = 2000.,4000.
+    b1, b2 = 1070.,2310.
+    p1, p2 = 2000.,2500.
+    fig = zoep.plot_energy_coeff(a1,a2,b1,b2,p1,p2)
+
     def __init__(self):
-        super().__init__(title="Zoeppritz Explorer")
-        a1, a2 = 2000.,4000.
-        b1, b2 = 1070.,2310.
-        p1, p2 = 2000.,2500.
-        zoep = Zoeppritz()
-        fig = zoep.plot_energy_coeff(a1,a2,b1,b2,p1,p2)
-        self.sw = Gtk.ScrolledWindow()
-        self.add(self.sw)
-        canvas = FigureCanvas(fig)
-        canvas.set_size_request(800, 600)
-        self.sw.add(canvas)
+        #get gui from glade file
+        self.builder = Gtk.Builder()
+        self.builder.add_from_file("gui.glade")
+        self.builder.connect_signals(self)
 
-    def on_button_clicked(self, widget):
-        a1, a2 = 2000.,4000.
-        b1, b2 = 1070.,2310.
-        p1, p2 = 2000.,2500.
-        zoep = Zoeppritz()
-        fig = zoep.plot_energy_coeff(a1,a2,b1,b2,p1,p2)
-        self.sw = Gtk.ScrolledWindow()
-        self.add(self.sw)
-        canvas = FigureCanvas(fig)
-        canvas.set_size_request(800, 600)
-        self.sw.add(canvas)
+        #connect graph
+        self.graph = self.builder.get_object("graph_box")
+        canvas = FigureCanvas(self.fig)
+        # canvas.set_size_request(800, 600)
+        self.graph.add(canvas)
+
+        #display main window
+        self.main_window = self.builder.get_object("main_window")
+        self.main_window.show_all()
 
 
-win = MainWindow()
-win.connect("destroy", Gtk.main_quit)
-win.show_all()
-Gtk.main()
+
+
+    def on_main_window_destroy(self, widget, data=None):
+        Gtk.main_quit()
+
+    def main(self):
+        Gtk.main()
+
+if __name__ == "__main__":
+    application = MainWindow()
+    application.main()
