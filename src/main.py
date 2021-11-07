@@ -9,8 +9,15 @@ from matplotlib.backends.backend_gtk3agg import (
 from matplotlib.figure import Figure
 
 class Handler():
+    def __init__(self, model, view):
+        self.model = model
+        self.view = view
+
     def on_adjustment_p1_changed(self, adjustment):
-        print(adjustment.get_value())
+        self.model.vp1 = adjustment.get_value()
+        print(self.model.vp1)
+        self.view.update_graph()
+
 
     def on_main_window_destroy(self, widget, data=None):
         Gtk.main_quit()
@@ -22,19 +29,11 @@ class MainWindow(Gtk.Window):
         #get gui from glade file
         self.builder = Gtk.Builder()
         self.builder.add_from_file("gui.glade")
-        self.builder.connect_signals(Handler())
-
-        #connect graph
-        self.graph = self.builder.get_object("graph_box")
-        fig = self.model.generate_energy_graph()
-        canvas = FigureCanvas(fig)
-        self.graph.add(canvas)
+        self.builder.connect_signals(Handler(self.model, self))
 
         #display main window
         self.main_window = self.builder.get_object("main_window")
         self.main_window.show_all()
-
-
 
     def main(self):
         Gtk.main()
