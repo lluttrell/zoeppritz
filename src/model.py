@@ -2,10 +2,21 @@ import numpy as np
 import cmath as cmath
 
 class Model:
-    def __init__(self):
+    def __init__(self, num_datapoints):
+        self.angles = np.linspace(0, 90, num_datapoints)
+        self.boundary_model = BoundaryModel()
+
+    def energy_coefficients(self):
+        print(self.angles)
+        x = [[theta, BoundaryModel(theta).normalized_energy_coefficients()] for theta in self.angles]
+        print(x)
+    
+
+class BoundaryModel:
+    def __init__(self, theta1 = 45):
         self.rock1 = Rock(2000,1070,2000)
         self.rock2 = Rock(4000, 2310, 2500)
-        self.theta1 = 45
+        self.theta1 = theta1
 
     @property
     def theta1(self):
@@ -37,7 +48,7 @@ class Model:
     def cos_phi2(self):
         return cmath.sqrt(1. - self.sin_phi2**2)
 
-    def amplitude_matrix(self, theta_deg):
+    def amplitude_matrix(self):
         vp1 = self.rock1.p_velocity
         vs1 = self.rock1.s_velocity
         zp1 = self.rock1.p_impedance
@@ -67,8 +78,18 @@ class Model:
         #Solve the matrix equations
         return np.linalg.solve(A,B)
 
-    
+    def normalized_energy_coefficients(self):
+        amp = self.amplitude_matrix()
 
+        list = np.array([
+            np.absolute(amp[0])**2,
+            (self.rock1.s_velocity * np.cos(self.phi1)) / (self.rock1.p_velocity * np.cos(self.theta1)) * np.absolute(amp[1])**2,
+            (self.rock1.density * self.rock2.p_velocity * np.real(self.cos_theta2)) / (self.rock1.density * self.rock1.p_velocity * np.cos(self.theta1)) * np.absolute(amp[2])**2,
+            (self.rock2.density * self.rock2.s_velocity * np.real(self.cos_phi2)) / (self.rock1.density * self.rock1.p_velocity * np.cos(self.phi1)) * np.absolute(amp[3])**2
+        ])
+        print(list.T.shape)
+        return list.T.tolist()
+        
 class Rock:
     def __init__(self, p_velocity, s_velocity, density):
         self.p_velocity = p_velocity
@@ -84,5 +105,5 @@ class Rock:
         return self.s_velocity * self.density
 
 if __name__ == "__main__":
-    model = Model()
-    print(model.amplitude_matrix(45))
+    model = Model(10)
+    print(model.energy_coefficients())
