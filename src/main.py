@@ -1,5 +1,6 @@
 import gi
 from model import Model
+from view import View
 
 gi.require_version("Gtk","3.0")
 from gi.repository import Gtk
@@ -8,7 +9,7 @@ from matplotlib.backends.backend_gtk3agg import (
     FigureCanvasGTK3Agg as FigureCanvas)
 from matplotlib.figure import Figure
 
-class Handler():
+class Handler:
     def __init__(self, model, view):
         self.model = model
         self.view = view
@@ -16,20 +17,27 @@ class Handler():
     def on_adjustment_p1_changed(self, adjustment):
         self.model.vp1 = adjustment.get_value()
         print(self.model.vp1)
-        self.view.update_graph()
-
+        self.view.update_plot()
 
     def on_main_window_destroy(self, widget, data=None):
         Gtk.main_quit()
 
 class MainWindow(Gtk.Window):
-    model = Model()
+
 
     def __init__(self):
+        self.model = Model(100)
+        self.view = View(self.model)
+        
         #get gui from glade file
         self.builder = Gtk.Builder()
         self.builder.add_from_file("gui.glade")
-        self.builder.connect_signals(Handler(self.model, self))
+        self.builder.connect_signals(Handler(self.model, self.view))
+
+        #connect graph
+        self.graph = self.builder.get_object("graph_box")
+        canvas = FigureCanvas(self.view.fig)
+        self.graph.add(canvas)
 
         #display main window
         self.main_window = self.builder.get_object("main_window")
