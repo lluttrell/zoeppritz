@@ -7,6 +7,14 @@ class Model:
         self.rock1 = Rock(2000,1070,2000)
         self.rock2 = Rock(4000, 2310, 2500)
 
+    @property
+    def vp1(self):
+        return self.rock1.p_velocity
+
+    @vp1.setter
+    def vp1(self, velocity):
+        self.rock1.p_velocity = velocity
+
     def energy_coefficients(self):
         return [[theta, BoundaryModel(self.rock1, self.rock2, theta).normalized_energy_coefficients()] for theta in self.angles]
 
