@@ -4,15 +4,16 @@ import cmath as cmath
 class Model:
     def __init__(self, num_datapoints):
         self.angles = np.linspace(0, 90, num_datapoints)
-        self.boundary_model = BoundaryModel()
-
-    def energy_coefficients(self):
-        x = [[theta, BoundaryModel(theta).normalized_energy_coefficients()] for theta in self.angles]
-        
-class BoundaryModel:
-    def __init__(self, theta1 = 45):
         self.rock1 = Rock(2000,1070,2000)
         self.rock2 = Rock(4000, 2310, 2500)
+
+    def energy_coefficients(self):
+        return [[theta, BoundaryModel(self.rock1, self.rock2, theta).normalized_energy_coefficients()] for theta in self.angles]
+
+class BoundaryModel:
+    def __init__(self,rock1, rock2, theta1):
+        self.rock1 = rock1
+        self.rock2 = rock2
         self.theta1 = theta1
 
     @property
