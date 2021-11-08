@@ -7,11 +7,8 @@ class Model:
         self.boundary_model = BoundaryModel()
 
     def energy_coefficients(self):
-        print(self.angles)
         x = [[theta, BoundaryModel(theta).normalized_energy_coefficients()] for theta in self.angles]
-        print(x)
-    
-
+        
 class BoundaryModel:
     def __init__(self, theta1 = 45):
         self.rock1 = Rock(2000,1070,2000)
@@ -87,8 +84,8 @@ class BoundaryModel:
             (self.rock1.density * self.rock2.p_velocity * np.real(self.cos_theta2)) / (self.rock1.density * self.rock1.p_velocity * np.cos(self.theta1)) * np.absolute(amp[2])**2,
             (self.rock2.density * self.rock2.s_velocity * np.real(self.cos_phi2)) / (self.rock1.density * self.rock1.p_velocity * np.cos(self.phi1)) * np.absolute(amp[3])**2
         ])
-        print(list.T.shape)
-        return list.T.tolist()
+
+        return list.T.flatten()
         
 class Rock:
     def __init__(self, p_velocity, s_velocity, density):
