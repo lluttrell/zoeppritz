@@ -144,7 +144,7 @@ class ZoeppritzSystem:
         B = np.array([[np.cos(self.theta1)],
                     [-np.sin(self.theta1)],
                     [-zp1 * np.cos(2 * self.phi1)],
-                    [vp1 / vs1 * zs1 * np.sin(2*self.theta1)]])
+                    [vs1 / vp1 * zs1 * np.sin(2*self.theta1)]])
 
         #Solve the matrix equations
         return np.linalg.solve(A,B).flatten()
