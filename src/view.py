@@ -22,7 +22,8 @@ class View:
 
     def update_plot(self):
         energy_coefficients = self.model.energy_coefficients()
-        self.ax[0].plot(energy_coefficients[0],energy_coefficients[1][0])
-        # self.ax[1].plot(thetas, ETP)
-        # self.ax[2].plot(thetas, ERS)
-        # self.ax[3].plot(thetas,ETS)
+        self.ax[0].plot(energy_coefficients[0],energy_coefficients[1])
+        self.ax[1].plot(energy_coefficients[0],energy_coefficients[2])
+        self.ax[2].plot(energy_coefficients[0],energy_coefficients[3])
+        self.ax[3].plot(energy_coefficients[0],energy_coefficients[4])
+
