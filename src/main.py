@@ -1,6 +1,7 @@
-import gi
 from model import Model
 from view import View
+
+import gi
 
 gi.require_version("Gtk","3.0")
 from gi.repository import Gtk
@@ -43,7 +44,6 @@ class Handler:
 
 class MainWindow(Gtk.Window):
 
-
     def __init__(self):
         self.model = Model(100)
         self.view = View(self.model)
@@ -55,8 +55,7 @@ class MainWindow(Gtk.Window):
 
         #connect graph
         self.graph = self.builder.get_object("graph_box")
-        canvas = FigureCanvas(self.view.fig)
-        self.graph.add(canvas)
+        self.graph.add(self.view.canvas)
 
         #display main window
         self.main_window = self.builder.get_object("main_window")
