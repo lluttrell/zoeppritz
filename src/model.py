@@ -11,7 +11,6 @@ class Model:
     def _update_boundary_model_list(self):
         self.boundary_model = [BoundaryModel(self.rock1, self.rock2, theta) for theta in self.angles]
     
-
     @property
     def vp1(self):
         return self.rock1.p_velocity
@@ -43,8 +42,8 @@ class Model:
     def vs2(self):
         return self.rock2.s_velocity
 
-    @vp1.setter
-    def vp1(self, velocity):
+    @vs2.setter
+    def vs2(self, velocity):
         self.rock2.s_velocity = velocity
         self._update_boundary_model_list()
     
@@ -53,7 +52,7 @@ class Model:
         return self.rock1.density
 
     @vp1.setter
-    def rho1(self, denstiy):
+    def rho1(self, density):
         self.rock1.density = density
         self._update_boundary_model_list()
     
