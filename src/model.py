@@ -3,9 +3,14 @@ import cmath as cmath
 
 class Model:
     def __init__(self, num_datapoints):
-        self.angles = np.linspace(0, 90, num_datapoints)
         self.rock1 = Rock(2000,1070,2000)
         self.rock2 = Rock(4000, 2310, 2500)
+        self.angles = np.linspace(0, 90, num_datapoints)
+        self._update_boundary_model_list()
+
+    def _update_boundary_model_list(self):
+        self.boundary_model = [BoundaryModel(self.rock1, self.rock2, theta) for theta in self.angles]
+    
 
     @property
     def vp1(self):
@@ -13,16 +18,32 @@ class Model:
 
     @vp1.setter
     def vp1(self, velocity):
+        print("updating list")
         self.rock1.p_velocity = velocity
+        self._update_boundary_model_list()
 
-    def energy_coefficients(self):
-        e = [BoundaryModel(self.rock1, self.rock2, theta).normalized_energy_coefficients() for theta in self.angles]
-        return e 
+    @property
+    def transmitted_p_energies(self):
+        return [bm.transmitted_p_energy for bm in self.boundary_model]
+    
+    @property
+    def transmitted_s_energies(self):
+        return [bm.transmitted_s_energy for bm in self.boundary_model]
+    
+    @property
+    def reflected_p_energies(self):
+        return [bm.reflected_p_energy for bm in self.boundary_model]
+    
+    @property
+    def reflected_s_energies(self):
+        return [bm.reflected_s_energy for bm in self.boundary_model]
+
 class BoundaryModel:
     def __init__(self,rock1, rock2, theta1):
         self.rock1 = rock1
         self.rock2 = rock2
         self.theta1 = theta1
+        self._set_normalized_energy_coefficients()
 
     @property
     def theta1(self):
@@ -33,6 +54,7 @@ class BoundaryModel:
         if value < 0 or value > 90:
             raise ValueError("Incidence angle not in valid range (0,90)")
         self._theta1_degrees = value
+        self._set_normalized_energy_coefficients()
 
     @property
     def phi1(self):
@@ -54,7 +76,7 @@ class BoundaryModel:
     def cos_phi2(self):
         return cmath.sqrt(1. - self.sin_phi2**2)
 
-    def amplitude_matrix(self):
+    def _amplitude_matrix(self):
         vp1 = self.rock1.p_velocity
         vs1 = self.rock1.s_velocity
         zp1 = self.rock1.p_impedance
@@ -82,20 +104,15 @@ class BoundaryModel:
                     [vp1 / vs1 * zs1 * np.sin(2*self.theta1)]])
 
         #Solve the matrix equations
-        return np.linalg.solve(A,B)
+        return np.linalg.solve(A,B).flatten()
 
-    def normalized_energy_coefficients(self):
-        amp = self.amplitude_matrix()
+    def _set_normalized_energy_coefficients(self):
+        amp = self._amplitude_matrix()
+        self.reflected_p_energy = np.absolute(amp[0])**2
+        self.reflected_s_energy = (self.rock1.s_velocity * np.cos(self.phi1)) / (self.rock1.p_velocity * np.cos(self.theta1)) * np.absolute(amp[1])**2
+        self.transmitted_p_energy = (self.rock1.density * self.rock2.p_velocity * np.real(self.cos_theta2)) / (self.rock1.density * self.rock1.p_velocity * np.cos(self.theta1)) * np.absolute(amp[2])**2
+        self.transmitted_s_energy = (self.rock2.density * self.rock2.s_velocity * np.real(self.cos_phi2)) / (self.rock1.density * self.rock1.p_velocity * np.cos(self.phi1)) * np.absolute(amp[3])**2
 
-        list = np.array([
-            [self.theta1],
-            np.absolute(amp[0])**2,
-            (self.rock1.s_velocity * np.cos(self.phi1)) / (self.rock1.p_velocity * np.cos(self.theta1)) * np.absolute(amp[1])**2,
-            (self.rock1.density * self.rock2.p_velocity * np.real(self.cos_theta2)) / (self.rock1.density * self.rock1.p_velocity * np.cos(self.theta1)) * np.absolute(amp[2])**2,
-            (self.rock2.density * self.rock2.s_velocity * np.real(self.cos_phi2)) / (self.rock1.density * self.rock1.p_velocity * np.cos(self.phi1)) * np.absolute(amp[3])**2
-        ])
-
-        return list.T.flatten().tolist()
         
 class Rock:
     def __init__(self, p_velocity, s_velocity, density):
@@ -112,5 +129,11 @@ class Rock:
         return self.s_velocity * self.density
 
 if __name__ == "__main__":
+    rock1 = Rock(2000,1070,2000)
+    rock2 = Rock(4000, 2310, 2500)
+    boundary_model = BoundaryModel(rock1, rock2, 45)
+    # print(boundary_model.reflected_p_energy)
+   
     model = Model(10)
-    print(model.energy_coefficients())
+    print(model.transmitted_p_energies)
+    print(model.angles)
