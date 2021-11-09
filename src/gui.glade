@@ -3,12 +3,44 @@
 <interface>
   <requires lib="gtk+" version="3.24"/>
   <object class="GtkAdjustment" id="adjustment_p1">
-    <property name="upper">15000</property>
+    <property name="upper">10000</property>
+    <property name="value">2000</property>
+    <property name="step-increment">100</property>
+    <property name="page-increment">1000</property>
+    <signal name="value-changed" handler="on_adjustment_p1_value_changed" swapped="no"/>
+  </object>
+  <object class="GtkAdjustment" id="adjustment_p2">
+    <property name="upper">10000</property>
     <property name="value">4000</property>
     <property name="step-increment">100</property>
     <property name="page-increment">1000</property>
-    <signal name="changed" handler="on_adjustment_p1_changed" swapped="no"/>
-    <signal name="value-changed" handler="on_adjustment_p1_changed" swapped="no"/>
+    <signal name="value-changed" handler="adjustment_p2_value_changed_cb" swapped="no"/>
+  </object>
+  <object class="GtkAdjustment" id="adjustment_rho2">
+    <property name="upper">10000</property>
+    <property name="value">2500</property>
+    <property name="step-increment">100</property>
+    <property name="page-increment">1000</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustment_rho_1">
+    <property name="upper">10000</property>
+    <property name="value">2000</property>
+    <property name="step-increment">100</property>
+    <property name="page-increment">1000</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustment_s1">
+    <property name="upper">10000</property>
+    <property name="value">1070</property>
+    <property name="step-increment">100</property>
+    <property name="page-increment">1000</property>
+    <signal name="value-changed" handler="on_adjustment_s1_value_changed" swapped="no"/>
+  </object>
+  <object class="GtkAdjustment" id="adjustment_s2">
+    <property name="upper">10000</property>
+    <property name="value">2310</property>
+    <property name="step-increment">100</property>
+    <property name="page-increment">1000</property>
+    <signal name="value-changed" handler="adjustment_s2_value_changed_cb" swapped="no"/>
   </object>
   <object class="GtkWindow" id="main_window">
     <property name="can-focus">False</property>
@@ -138,6 +170,7 @@
                 <property name="margin-top">4</property>
                 <property name="margin-bottom">4</property>
                 <property name="text" translatable="yes">1070</property>
+                <property name="adjustment">adjustment_s1</property>
                 <property name="climb-rate">100</property>
               </object>
               <packing>
@@ -156,6 +189,7 @@
                 <property name="margin-top">4</property>
                 <property name="margin-bottom">4</property>
                 <property name="text" translatable="yes">0</property>
+                <property name="adjustment">adjustment_rho_1</property>
                 <property name="climb-rate">100</property>
               </object>
               <packing>
@@ -164,7 +198,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkSpinButton" id="velocity_p_">
+              <object class="GtkSpinButton" id="velocity_p_2">
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="margin-left">4</property>
@@ -174,6 +208,7 @@
                 <property name="margin-top">4</property>
                 <property name="margin-bottom">4</property>
                 <property name="text" translatable="yes">0</property>
+                <property name="adjustment">adjustment_p2</property>
                 <property name="climb-rate">100</property>
               </object>
               <packing>
@@ -192,6 +227,7 @@
                 <property name="margin-top">4</property>
                 <property name="margin-bottom">4</property>
                 <property name="text" translatable="yes">0</property>
+                <property name="adjustment">adjustment_s2</property>
                 <property name="climb-rate">100</property>
               </object>
               <packing>
@@ -210,6 +246,7 @@
                 <property name="margin-top">4</property>
                 <property name="margin-bottom">4</property>
                 <property name="text" translatable="yes">0</property>
+                <property name="adjustment">adjustment_rho2</property>
                 <property name="climb-rate">100</property>
               </object>
               <packing>
