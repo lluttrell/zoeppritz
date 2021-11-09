@@ -18,7 +18,6 @@ class Model:
 
     @vp1.setter
     def vp1(self, velocity):
-        print("updating list")
         self.rock1.p_velocity = velocity
         self._update_boundary_model_list()
     
@@ -28,7 +27,6 @@ class Model:
 
     @vp2.setter
     def vp2(self, velocity):
-        print("updating list")
         self.rock2.p_velocity = velocity
         self._update_boundary_model_list()
     
@@ -38,7 +36,6 @@ class Model:
 
     @vs1.setter
     def vs1(self, velocity):
-        print("updating list")
         self.rock1.s_velocity = velocity
         self._update_boundary_model_list()
     
@@ -48,7 +45,6 @@ class Model:
 
     @vp1.setter
     def vp1(self, velocity):
-        print("updating list")
         self.rock2.s_velocity = velocity
         self._update_boundary_model_list()
     
@@ -58,7 +54,6 @@ class Model:
 
     @vp1.setter
     def rho1(self, denstiy):
-        print("updating list")
         self.rock1.density = density
         self._update_boundary_model_list()
     
@@ -68,7 +63,6 @@ class Model:
 
     @rho2.setter
     def rho2(self, density):
-        print("updating list")
         self.rock2.density = density
         self._update_boundary_model_list()
   
