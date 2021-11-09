@@ -21,9 +21,14 @@ class View:
         ax[3].set_xlabel("Incident Angle $(^\circ$)")
 
     def update_plot(self):
-        energy_coefficients = self.model.energy_coefficients()
-        self.ax[0].plot(energy_coefficients[0],energy_coefficients[1])
-        self.ax[1].plot(energy_coefficients[0],energy_coefficients[2])
-        self.ax[2].plot(energy_coefficients[0],energy_coefficients[3])
-        self.ax[3].plot(energy_coefficients[0],energy_coefficients[4])
+        self.ax[0].clear()
+        self.ax[1].clear()
+        self.ax[2].clear()
+        self.ax[3].clear()
+        
+        self.ax[0].plot(self.model.angles, self.model.reflected_p_energies)
+        self.ax[1].plot(self.model.angles, self.model.transmitted_p_energies)
+        self.ax[2].plot(self.model.angles, self.model.reflected_s_energies)
+        self.ax[3].plot(self.model.angles, self.model.transmitted_s_energies)
+
 
