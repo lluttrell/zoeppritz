@@ -3,9 +3,9 @@ import cmath as cmath
 import matplotlib.pyplot as plt
 
 class Zoeppritz:
+    
 
-    def solve(self, a1,a2,b1,b2,p1,p2,theta):
-                
+    def solve(self, a1,a2,b1,b2,p1,p2,theta): 
         # Compute the aucoustic Impedance
         z1s = p1*b1
         z2s = p2*b2
@@ -70,6 +70,10 @@ class Zoeppritz:
         for i in range(0,N):
             results = self.solve(a1,a2,b1,b2,p1,p2,thetas[i])
             (ERP[i],ERS[i], ETP[i], ETS[i]) = results
+        
+        return results
+
+    def plot_energy_coeff():
         
         fig, ax = plt.subplots(4,1,figsize=(6,6),sharex=False)
         ax[0].plot(thetas,ERP)
