@@ -45,7 +45,7 @@ class Handler:
 class MainWindow(Gtk.Window):
 
     def __init__(self):
-        self.model = model.Model(100)
+        self.model = model.Model(500)
         self.view = view.View(self.model)
         
         #get gui from glade file
