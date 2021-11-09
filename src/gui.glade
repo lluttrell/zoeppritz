@@ -14,19 +14,21 @@
     <property name="value">4000</property>
     <property name="step-increment">100</property>
     <property name="page-increment">1000</property>
-    <signal name="value-changed" handler="adjustment_p2_value_changed_cb" swapped="no"/>
+    <signal name="value-changed" handler="on_adjustment_p2_value_changed" swapped="no"/>
   </object>
   <object class="GtkAdjustment" id="adjustment_rho2">
     <property name="upper">10000</property>
     <property name="value">2500</property>
     <property name="step-increment">100</property>
     <property name="page-increment">1000</property>
+    <signal name="value-changed" handler="on_adjustment_rho2_value_changed" swapped="no"/>
   </object>
   <object class="GtkAdjustment" id="adjustment_rho_1">
     <property name="upper">10000</property>
     <property name="value">2000</property>
     <property name="step-increment">100</property>
     <property name="page-increment">1000</property>
+    <signal name="value-changed" handler="on_adjustment_rho1_value_changed" swapped="no"/>
   </object>
   <object class="GtkAdjustment" id="adjustment_s1">
     <property name="upper">10000</property>
@@ -40,7 +42,7 @@
     <property name="value">2310</property>
     <property name="step-increment">100</property>
     <property name="page-increment">1000</property>
-    <signal name="value-changed" handler="adjustment_s2_value_changed_cb" swapped="no"/>
+    <signal name="value-changed" handler="on_adjustment_s2_value_changed" swapped="no"/>
   </object>
   <object class="GtkWindow" id="main_window">
     <property name="can-focus">False</property>

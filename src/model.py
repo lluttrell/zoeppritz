@@ -21,7 +21,57 @@ class Model:
         print("updating list")
         self.rock1.p_velocity = velocity
         self._update_boundary_model_list()
+    
+    @property
+    def vp2(self):
+        return self.rock2.p_velocity
 
+    @vp2.setter
+    def vp2(self, velocity):
+        print("updating list")
+        self.rock2.p_velocity = velocity
+        self._update_boundary_model_list()
+    
+    @property
+    def vs1(self):
+        return self.rock1.s_velocity
+
+    @vs1.setter
+    def vs1(self, velocity):
+        print("updating list")
+        self.rock1.s_velocity = velocity
+        self._update_boundary_model_list()
+    
+    @property
+    def vs2(self):
+        return self.rock2.s_velocity
+
+    @vp1.setter
+    def vp1(self, velocity):
+        print("updating list")
+        self.rock2.s_velocity = velocity
+        self._update_boundary_model_list()
+    
+    @property
+    def rho1(self):
+        return self.rock1.density
+
+    @vp1.setter
+    def rho1(self, denstiy):
+        print("updating list")
+        self.rock1.density = density
+        self._update_boundary_model_list()
+    
+    @property
+    def rho2(self):
+        return self.rock2.density
+
+    @rho2.setter
+    def rho2(self, density):
+        print("updating list")
+        self.rock2.density = density
+        self._update_boundary_model_list()
+  
     @property
     def transmitted_p_energies(self):
         return [bm.transmitted_p_energy for bm in self.boundary_model]

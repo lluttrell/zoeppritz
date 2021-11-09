@@ -14,9 +14,28 @@ class Handler:
         self.model = model
         self.view = view
 
-    def on_adjustment_p1_changed(self, adjustment):
+    def on_adjustment_p1_value_changed(self, adjustment):
         self.model.vp1 = adjustment.get_value()
-        print(self.model.vp1)
+        self.view.update_plot()
+    
+    def on_adjustment_p2_value_changed(self, adjustment):
+        self.model.vp2 = adjustment.get_value()
+        self.view.update_plot()
+    
+    def on_adjustment_s1_value_changed(self, adjustment):
+        self.model.vs1 = adjustment.get_value()
+        self.view.update_plot()
+    
+    def on_adjustment_s2_value_changed(self, adjustment):
+        self.model.vs2 = adjustment.get_value()
+        self.view.update_plot()
+        
+    def on_adjustment_rho1_value_changed(self, adjustment):
+        self.model.rho1 = adjustment.get_value()
+        self.view.update_plot()
+    
+    def on_adjustment_rho2_value_changed(self, adjustment):
+        self.model.rho2 = adjustment.get_value()
         self.view.update_plot()
 
     def on_main_window_destroy(self, widget, data=None):
