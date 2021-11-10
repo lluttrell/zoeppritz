@@ -3,8 +3,7 @@
 
 Zoeppritz Energy Explorer is an interactive tool for exploring the partitioning of seismic energy at a plane boundary between two rocks. It plots the (normalized) reflected and transmitted p and s wave energy coefficients as a function of the incident angle of the incident p-wave. It allows the user to set properties of the two rocks and updates the graph in real time. 
 
-### Screenshot
-![[Screenshot](https://raw.githubusercontent.com/lluttrell/zoeppritz/master/screenshot.png)]
+![Screenshot](/screenshot.png?raw=true)
 
 ## Installation (Ubuntu/Debian)
 The following steps use [pyenv](https://github.com/pyenv/pyenv#installation) for python version management and [pipenv](https://pypi.org/project/pipenv/) for package management. If you don't have them installed check them out first.
