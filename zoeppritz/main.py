@@ -11,6 +11,7 @@ from matplotlib.backends.backend_gtk3agg import (
 from matplotlib.figure import Figure
 
 class Handler:
+    """Handler class for Gtk application callbacks"""
     def __init__(self, model, view):
         self.model = model
         self.view = view
@@ -43,7 +44,7 @@ class Handler:
         Gtk.main_quit()
 
 class MainWindow(Gtk.Window):
-
+    """Main Window for the gui"""
     def __init__(self):
         self.model = model.Model(500)
         self.view = view.View(self.model)
